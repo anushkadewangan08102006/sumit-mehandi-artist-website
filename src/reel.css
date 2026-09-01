@@ -1,0 +1,31 @@
+.reel-section { position: relative; }
+
+.reel-window::before,
+.reel-window::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  width: 70px;
+  pointer-events: none;
+}
+
+.reel-window { position: relative; }
+
+.reel-window::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--sand), transparent);
+}
+
+.reel-window::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--sand), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel-track,
+  .gallery-row {
+    animation-play-state: paused;
+  }
+}
