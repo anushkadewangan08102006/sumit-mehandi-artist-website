@@ -70,7 +70,15 @@ const bridalImages = [
   "/images/bridal-mehndi-artist-bangalore-4.jpeg",
   "/images/bridal-mehndi-artist-bangalore-5.jpeg",
   "/images/bridal-mehndi-artist-bangalore-6.jpeg",
-
+  "/images/bridal7.jpeg",
+  "/images/bridal8.jpeg",
+  "/images/bridal9.jpeg",
+  "/images/bridal10.jpeg",
+  "/images/bridal11.jpeg",
+  "/images/bridal12.jpeg",
+  "/images/bridal13.jpeg",
+  "/images/bridal14.jpeg",
+  "/images/bridal15.jpeg",
 ];
 const Festivalimages = [
   "/images/festival-mehndi-design-bangalore.jpeg",
@@ -93,7 +101,13 @@ const Guestimages = [
   "/images/wedding-guest-mehndi-bangalore-5.jpeg",
   "/images/wedding-guest-mehndi-bangalore-6.jpeg",
   "/images/wedding-guest-mehndi-bangalore-8.jpeg",
-  "/images/wedding-guest-mehndi-bangalore-9.jpeg",
+  "/images/guest9.jpeg",
+  "/images/guest10.jpeg",
+  "/images/guest11.jpeg",
+  "/images/guest13.jpeg",
+  "/images/guest12.jpeg",
+  "/images/guest14.jpeg",
+  "/images/guest15.jpeg",
 ];
 const Legimages = [
   "/images/leg-mehndi-artist-bangalore.jpeg",
