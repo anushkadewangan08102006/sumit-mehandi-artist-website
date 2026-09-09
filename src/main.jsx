@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
   Link,
+  Navigate,
   Route,
   Routes,
   useLocation,
@@ -825,8 +826,8 @@ function DesignsPage() {
         <h1>{category.title}</h1>
         <p>{category.description}</p>
         <p className="starting-price">
-   {category.title} Starting from {category.startingPrice}
-</p>
+          {category.title} Starting from {category.startingPrice}
+        </p>
       </section>
 
       <section className="design-grid">
@@ -908,6 +909,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/designs/:slug" element={<DesignsPage />} />
           <Route path="/book" element={<BookPage />} />
+          <Route path="/mehndi-artist-bangalore" element={<Navigate to="/book" replace />} />
         </Routes>
       </PageTransition>
     </BrowserRouter>
