@@ -5,7 +5,7 @@ export const siteConfig = {
   phone: "+919665751029", // demo number — replace later
   instagram: "https://www.instagram.com/sumit_mehandi_bangalore/",
   email: "sumitmehandiartistartist@gmail.com",
-  website: "https://example.com",
+  website: "https://sumitmehandiartist.in",
 };
 
 export const heroImages = [

@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowDownRight,
   ArrowLeft,
+  ArrowRight,
   ArrowUpRight,
   ChevronDown,
   ChevronLeft,
@@ -582,14 +583,14 @@ function Home() {
     "@type": "LocalBusiness",
     "name": "Sumit Mehandi Artist",
     "description": "Professional bridal, wedding, and contemporary mehendi artist in Bangalore. Affordable mehendi designs.",
-    "url": "https://example.com/",
+    "url": "https://sumitmehandiartist.in/",
     "telephone": "+91 9665751029",
     "areaServed": {
       "@type": "City",
       "name": "Bangalore"
     },
     "priceRange": "₹₹",
-    "image": "https://example.com/images/bridal-mehndi-artist-bangalore-1.jpeg"
+    "image": "https://sumitmehandiartist.in/images/bridal-mehndi-artist-bangalore-1.jpeg"
   };
 
   const faqSchema = {
@@ -610,7 +611,7 @@ function Home() {
       <Helmet>
         <title>Sumit Mehandi Artist | Best Mehendi Artist in Bangalore</title>
         <meta name="description" content="Looking for the best mehendi artist in Bangalore? Sumit Mehandi Artist offers affordable bridal, wedding, and festival mehendi designs." />
-        <link rel="canonical" href="https://example.com/" />
+        <link rel="canonical" href="https://sumitmehandiartist.in/" />
         <script type="application/ld+json">
           {JSON.stringify(localBusinessSchema)}
         </script>
@@ -812,7 +813,7 @@ function DesignsPage() {
       <Helmet>
         <title>{category.title} | Best Mehendi Artist in Bangalore</title>
         <meta name="description" content={category.description} />
-        <link rel="canonical" href={`https://example.com/designs/${slug}`} />
+        <link rel="canonical" href={`https://sumitmehandiartist.in/designs/${slug}`} />
         {serviceSchema && (
           <script type="application/ld+json">
             {JSON.stringify(serviceSchema)}
@@ -881,7 +882,7 @@ function BookPage() {
       <Helmet>
         <title>Book Mehndi Artist Bangalore | Sumit Mehandi Artist</title>
         <meta name="description" content="Book the best bridal and affordable mehendi artist in Bangalore. Contact us on WhatsApp to discuss your occasion and date." />
-        <link rel="canonical" href="https://example.com/book" />
+        <link rel="canonical" href="https://sumitmehandiartist.in/book" />
       </Helmet>
       <Navbar />
       <div className="book-inner">
@@ -901,6 +902,317 @@ function BookPage() {
   );
 }
 
+function WhyChooseUs() {
+  const reveal = useReveal();
+  return (
+    <section className="section why-choose-us" id="why-choose-us">
+      <motion.div {...reveal}>
+        <p className="eyebrow">WHY SUMIT MEHANDI ARTIST</p>
+        <h2>
+          Why choose us for your
+          <br />
+          <em>mehndi in Bangalore?</em>
+        </h2>
+        <p className="body-copy">
+          We combine decades of heritage henna craftsmanship with modern hygiene, punctuality, and personalized attention to make every celebration special.
+        </p>
+      </motion.div>
+
+      <div className="why-grid">
+        <motion.div className="why-card" {...reveal}>
+          <div className="why-icon">✦</div>
+          <h3>Intricate & Custom Designs</h3>
+          <p>
+            From traditional Indian bridal figures and peacocks to contemporary minimal patterns, every design is tailored to your taste.
+          </p>
+        </motion.div>
+
+        <motion.div className="why-card" {...reveal}>
+          <div className="why-icon">✦</div>
+          <h3>100% Natural Henna</h3>
+          <p>
+            We prepare chemical-free, natural henna paste ensuring deep, rich reddish-brown stains that are safe for all skin types.
+          </p>
+        </motion.div>
+
+        <motion.div className="why-card" {...reveal}>
+          <div className="why-icon">✦</div>
+          <h3>At-Home Doorstep Service</h3>
+          <p>
+            Enjoy comfortable home or venue appointments anywhere across Bangalore without travelling to a studio.
+          </p>
+        </motion.div>
+
+        <motion.div className="why-card" {...reveal}>
+          <div className="why-icon">✦</div>
+          <h3>Punctual & Patient Artists</h3>
+          <p>
+            Our experienced artists arrive on time and dedicate genuine care and speed for both individual brides and large guest groups.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function MehndiArtistBangalorePage() {
+  const reveal = useReveal();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Sumit Mehandi Artist",
+    "description": "Professional bridal, wedding, engagement, and festival mehendi artist in Bangalore. Affordable packages with home service.",
+    "url": "https://sumitmehandiartist.in/mehndi-artist-bangalore",
+    "telephone": siteConfig.phone,
+    "email": siteConfig.email,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bangalore",
+      "addressRegion": "Karnataka",
+      "addressCountry": "IN"
+    },
+    "areaServed": [
+      "Bangalore",
+      "Indiranagar",
+      "Whitefield",
+      "Koramangala",
+      "HSR Layout",
+      "Electronic City",
+      "Yelahanka",
+      "Hebbal"
+    ],
+    "priceRange": "₹400 - ₹21,000",
+    "image": "https://sumitmehandiartist.in/images/bridal-mehndi-artist-bangalore-1.jpeg"
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer,
+      },
+    })),
+  };
+
+  return (
+    <div className="seo-landing-page">
+      <Helmet>
+        <title>Mehndi Artist in Bangalore | Sumit Mehandi Artist</title>
+        <meta
+          name="description"
+          content="Looking for a professional mehendi artist in Bangalore? Sumit Mehandi Artist provides affordable bridal, wedding, engagement, and festival mehendi designs across Bangalore."
+        />
+        <link rel="canonical" href="https://sumitmehandiartist.in/mehndi-artist-bangalore" />
+        <script type="application/ld+json">
+          {JSON.stringify(localBusinessSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      </Helmet>
+
+      <Navbar />
+
+      {/* Hero Section */}
+      <section className="seo-hero">
+        <motion.div className="seo-hero-content" {...reveal}>
+          <p className="eyebrow">BANGALORE · PROFESSIONAL MEHNDI ARTIST</p>
+          <h1>Mehndi Artist in Bangalore</h1>
+          <p className="hero-text">
+            Sumit Mehandi Artist brings elegant, detailed, and contemporary mehendi stories to brides, families, and celebrations across Bangalore.
+          </p>
+          <div className="hero-actions">
+            <Link className="button" to="/book">
+              Book Your Mehndi <ArrowUpRight size={15} />
+            </Link>
+            <a className="button ghost" href="#services">
+              Explore Services <ArrowDownRight size={15} />
+            </a>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Bangalore Introduction Section */}
+      <section className="section seo-intro">
+        <motion.div {...reveal}>
+          <p className="eyebrow">ABOUT OUR SERVICES IN BANGALORE</p>
+          <h2>
+            Bridal & Event Mehendi Artist
+            <br />
+            <em>in Bangalore.</em>
+          </h2>
+          <p className="body-copy">
+            Sumit Mehandi Artist is regarded as one of the best mehendi artists in Bangalore, specializing in bridal, wedding guest, engagement, and festival mehendi designs. We blend traditional Indian motifs with refined contemporary elegance.
+          </p>
+          <p className="body-copy">
+            With at-home appointments across Bangalore, every session is delivered with patience, precision, natural henna, and attention to detail.
+          </p>
+          <Link className="text-link" to="/book">
+            Start your booking <ArrowUpRight size={15} />
+          </Link>
+        </motion.div>
+      </section>
+
+      {/* Services Grid (Bridal, Wedding, Engagement, Festival) */}
+      <section className="section seo-services" id="services">
+        <motion.div {...reveal}>
+          <p className="eyebrow">MEHNDI SERVICES IN BANGALORE</p>
+          <h2>
+            Tailored mehendi offerings
+            <br />
+            <em>for every occasion.</em>
+          </h2>
+        </motion.div>
+
+        <div className="seo-services-grid">
+          {/* Bridal Mehndi */}
+          <motion.article className="seo-service-card" {...reveal}>
+            <div className="seo-card-img">
+              <img src="/images/bridal-mehndi-artist-bangalore-1.jpeg" alt="Bridal Mehndi Artist in Bangalore" loading="lazy" />
+            </div>
+            <div className="seo-card-content">
+              <span className="eyebrow">BRIDAL SPECIALIST</span>
+              <h3>Bridal Mehndi</h3>
+              <p>
+                Intricate bridal mehendi designs in Bangalore featuring traditional figures, peacock motifs, and customized wedding details.
+              </p>
+              <p className="starting-price">Starting from ₹4,000</p>
+              <div className="seo-card-actions">
+                <Link className="button" to="/book">
+                  Book Your Mehndi <ArrowUpRight size={15} />
+                </Link>
+                <Link className="text-link" to="/designs/bridal">
+                  Explore Bridal Designs <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </motion.article>
+
+          {/* Wedding & Guest Mehndi */}
+          <motion.article className="seo-service-card" {...reveal}>
+            <div className="seo-card-img">
+              <img src="/images/arabic-mehndi-design-bangalore.jpeg" alt="Wedding Mehndi Artist in Bangalore" loading="lazy" />
+            </div>
+            <div className="seo-card-content">
+              <span className="eyebrow">WEDDING & GUESTS</span>
+              <h3>Family & Guest Mehndi</h3>
+              <p>
+                Beautiful and affordable mehendi designs in Bangalore for family members, relatives, and wedding guests.
+              </p>
+              <p className="starting-price">Starting from ₹400</p>
+              <div className="seo-card-actions">
+                <Link className="button" to="/book">
+                  Book Your Mehndi <ArrowUpRight size={15} />
+                </Link>
+                <Link className="text-link" to="/designs/relatives">
+                  Explore Guest Designs <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </motion.article>
+
+          {/* Engagement Mehndi */}
+          <motion.article className="seo-service-card" {...reveal}>
+            <div className="seo-card-img">
+              <img src="/images/best-mehndi-artist-bangalore-carousel-1.jpeg" alt="Engagement Mehndi Artist in Bangalore" loading="lazy" />
+            </div>
+            <div className="seo-card-content">
+              <span className="eyebrow">ENGAGEMENT CEREMONY</span>
+              <h3>Engagement Mehndi</h3>
+              <p>
+                Graceful engagement mehendi designs near you for your special pre-wedding celebration.
+              </p>
+              <p className="starting-price">Starting from ₹4,000</p>
+              <div className="seo-card-actions">
+                <Link className="button" to="/book">
+                  Book Your Mehndi <ArrowUpRight size={15} />
+                </Link>
+                <Link className="text-link" to="/designs/engagement">
+                  Explore Engagement Designs <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </motion.article>
+
+          {/* Festival Mehndi */}
+          <motion.article className="seo-service-card" {...reveal}>
+            <div className="seo-card-img">
+              <img src="/images/festival-mehndi-design-bangalore.jpeg" alt="Festival Mehndi Artist in Bangalore" loading="lazy" />
+            </div>
+            <div className="seo-card-content">
+              <span className="eyebrow">FESTIVALS & CELEBRATIONS</span>
+              <h3>Festival Mehndi</h3>
+              <p>
+                Affordable mehendi designs for Karwa Chauth, Teej, Diwali, and festive events across Bangalore.
+              </p>
+              <p className="starting-price">Starting from ₹400</p>
+              <div className="seo-card-actions">
+                <Link className="button" to="/book">
+                  Book Your Mehndi <ArrowUpRight size={15} />
+                </Link>
+                <Link className="text-link" to="/designs/festival">
+                  Explore Festival Designs <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </motion.article>
+        </div>
+      </section>
+
+      {/* Existing Mehndi Gallery */}
+      <Gallery />
+
+      {/* Why Choose Us Section */}
+      <WhyChooseUs />
+
+      {/* Actual Bangalore Service Areas */}
+      <Areas />
+
+      {/* FAQ Section */}
+      <FAQ />
+
+      {/* Final CTA Banner */}
+      <section className="section seo-cta-banner">
+        <motion.div {...reveal}>
+          <p className="eyebrow">BOOK YOUR APPOINTMENT</p>
+          <h2>
+            Ready to book the best mehendi
+            <br />
+            <em>artist in Bangalore?</em>
+          </h2>
+          <p className="body-copy">
+            Tell us your event date and location to secure your appointment today.
+          </p>
+          <div className="hero-actions">
+            <Link className="button" to="/book">
+              Book Your Mehndi <ArrowUpRight size={15} />
+            </Link>
+            <a
+              className="button ghost"
+              href={getWhatsAppUrl("Hi Sumit, I would like to book a mehndi appointment in Bangalore.")}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Chat on WhatsApp <MessageCircle size={15} />
+            </a>
+          </div>
+        </motion.div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -909,7 +1221,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/designs/:slug" element={<DesignsPage />} />
           <Route path="/book" element={<BookPage />} />
-          <Route path="/mehndi-artist-bangalore" element={<Navigate to="/book" replace />} />
+          <Route path="/mehndi-artist-bangalore" element={<MehndiArtistBangalorePage />} />
         </Routes>
       </PageTransition>
     </BrowserRouter>
