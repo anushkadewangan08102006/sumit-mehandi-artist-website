@@ -17,9 +17,21 @@ export const heroImages = [
   "/images/bridal-mehndi-artist-bangalore-6.jpeg",
 ];
 
+export const categoryPaths = {
+  bridal: "/bridal-mehndi-artist-bangalore",
+  festival: "/festival-mehndi-artist-bangalore",
+  relatives: "/guest-mehndi-artist-bangalore",
+  engagement: "/engagement-mehndi-artist-bangalore",
+  Leg: "/leg-mehndi-artist-bangalore",
+  leg: "/leg-mehndi-artist-bangalore",
+  Both: "/full-hand-leg-mehndi-bangalore",
+  both: "/full-hand-leg-mehndi-bangalore",
+};
+
 export const categories = [
   {
     slug: "bridal",
+    path: "/bridal-mehndi-artist-bangalore",
     title: "Bridal Mehndi",
     description: "Premium and intricate bridal mehendi artist in Bangalore, crafting memorable stories for your special day.",
     image: "/images/bridal-mehndi-artist-bangalore-1.jpeg",
@@ -27,6 +39,7 @@ export const categories = [
   },
   {
     slug: "festival",
+    path: "/festival-mehndi-artist-bangalore",
     title: "Festival Mehndi",
     description: "Affordable mehendi designs in Bangalore for festivals and occasions with a modern Indian touch.",
     image: "/images/festival-mehndi-design-bangalore.jpeg",
@@ -34,6 +47,7 @@ export const categories = [
   },
   {
     slug: "relatives",
+    path: "/guest-mehndi-artist-bangalore",
     title: "Guest Mehndi",
     description: "Beautiful and budget mehendi artist in Bangalore for family, friends, and wedding guests.",
     image: "/images/arabic-mehndi-design-bangalore.jpeg",
@@ -41,6 +55,7 @@ export const categories = [
   },
   {
     slug: "engagement",
+    path: "/engagement-mehndi-artist-bangalore",
     title: "Engagement Mehndi",
     description: "Graceful engagement mehendi artist near you for your first celebration together.",
     image: "/images/best-mehndi-artist-bangalore-carousel-1.jpeg",
@@ -48,6 +63,7 @@ export const categories = [
   },
   {
     slug: "Leg",
+    path: "/leg-mehndi-artist-bangalore",
     title: "Leg Mehendi",
     description: "Detailed leg mehendi designs by professional artists in Bangalore.",
     image: "/images/leg-mehndi-artist-bangalore.jpeg",
@@ -55,11 +71,11 @@ export const categories = [
   },
   {
     slug: "Both",
+    path: "/full-hand-leg-mehndi-bangalore",
     title: "Full Hand & Leg",
     description: "Complete bridal mehendi packages for hands and legs in Bangalore.",
     image: "/images/full-hand-leg-mehndi-bangalore.jpeg",
     startingPrice: "₹9,000",
-
   },
 ];
 
@@ -90,7 +106,6 @@ const Festivalimages = [
   "/images/arabic-mehndi-design-bangalore.jpeg",
   "/images/wedding-guest-mehndi-bangalore-1.jpeg",
   "/images/festival-mehndi-design-bangalore-6.png",
-
 ];
 const Guestimages = [
   "/images/arabic-mehndi-design-bangalore.jpeg",
@@ -151,7 +166,9 @@ const categoryPrices = {
   relatives: [799, 999, 1199, 1499, 1699, 1999],
   engagement: [1999, 2499, 2999, 3499, 3999, 4499],
   Leg: [2499, 2999, 3499, 3999, 4499, 4999],
+  leg: [2499, 2999, 3499, 3999, 4499, 4999],
   Both: [3999, 4499, 4999, 5999, 6499, 6999],
+  both: [3999, 4499, 4999, 5999, 6499, 6999],
 };
 
 export const designs = categories.flatMap((category) => {
@@ -163,9 +180,9 @@ export const designs = categories.flatMap((category) => {
     images = Festivalimages;
   } else if (category.slug === "relatives") {
     images = Guestimages;
-  } else if (category.slug === "Leg") {
+  } else if (category.slug === "Leg" || category.slug === "leg") {
     images = Legimages;
-  } else if (category.slug === "Both") {
+  } else if (category.slug === "Both" || category.slug === "both") {
     images = bothimages;
   } else if (category.slug === "engagement") {
     images = engimages;
@@ -175,15 +192,12 @@ export const designs = categories.flatMap((category) => {
     id: `${category.slug}-${index + 1}`,
     category: category.slug,
     name: `${category.title} ${String(index + 1).padStart(2, "0")}`,
-
-    price: `₹${categoryPrices[category.slug][index]}`,
-
-    description:
-      `A beautifully composed ${category.title.toLowerCase()} design by the best mehendi artist in Bangalore, featuring intricate detailing.`,
-
+    price: `₹${categoryPrices[category.slug]?.[index] || 400}`,
+    description: `A beautifully composed ${category.title.toLowerCase()} design by the best mehendi artist in Bangalore, featuring intricate detailing.`,
     image: images[index],
   }));
 });
+
 export const instagramVideos = [
   {
     url: "https://www.instagram.com/p/DY_XER3Jf-d/",
@@ -217,23 +231,15 @@ export const instagramVideos = [
 
 export const gallery = [
   {
-    // title: "Bridal Story",
-    // text: "Intricate details for the bride.",
     image: "/images/bridal-mehndi-artist-bangalore-5.jpeg",
   },
   {
-    // title: "Fine Details",
-    // text: "Peacocks, florals and Indian motifs.",
     image: "/images/full-hand-leg-mehndi-bangalore.jpeg",
   },
   {
-    // title: "Wedding Details",
-    // text: "Personalised elements that tell a story.",
     image: "/images/best-mehndi-artist-bangalore-carousel-4.png",
   },
   {
-    // title: "Traditional Touch",
-    // text: "Classic patterns with a refined finish.",
     image: "/images/bridal-mehndi-artist-bangalore-6.jpeg",
   },
   {
@@ -275,11 +281,19 @@ export const faqs = [
 ];
 
 export function getDesignsByCategory(slug) {
-  return designs.filter((design) => design.category === slug);
+  if (!slug) return [];
+  const lower = slug.toLowerCase();
+  return designs.filter(
+    (design) => design.category === slug || design.category.toLowerCase() === lower
+  );
 }
 
 export function getCategory(slug) {
-  return categories.find((category) => category.slug === slug);
+  if (!slug) return null;
+  const lower = slug.toLowerCase();
+  return categories.find(
+    (category) => category.slug === slug || category.slug.toLowerCase() === lower
+  );
 }
 
 export function getWhatsAppUrl(message) {

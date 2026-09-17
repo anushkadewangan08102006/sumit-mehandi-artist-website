@@ -30,6 +30,7 @@ import {
 
 import {
   categories,
+  categoryPaths,
   designs,
   faqs,
   gallery,
@@ -175,8 +176,6 @@ function Hero() {
       <div className="hero-grain" />
 
       <motion.div className="hero-copy" {...useReveal()}>
-        {/* <p className="eyebrow">BRIDAL · WEDDING · CONTEMPORARY</p>
-        <p className="eyebrow">✦BANGALORE · BY APPOINTMENT</p> */}
         <h1>
           Best Mehendi Artist
           <br />
@@ -282,7 +281,7 @@ function CategorySection() {
 
       <motion.div className="category-grid" {...reveal}>
         {categories.map((category) => (
-          <Link className="category" to={`/designs/${category.slug}`} key={category.slug}>
+          <Link className="category" to={category.path || categoryPaths[category.slug]} key={category.slug}>
             <img src={category.image} alt={`${category.title} in Bangalore`} loading="lazy" />
             <span>
               {category.title}
@@ -315,19 +314,19 @@ function Gallery() {
           const realIndex = index % gallery.length;
           return (
             <article
-              key={`${item.title}-${index}`}
+              key={`${item.title || "gallery"}-${index}`}
               className="gallery-item-card"
               onClick={() => setSelectedIndex(realIndex)}
             >
               <div className="gallery-img-wrapper">
-                <img src={item.image} alt={`${item.title} mehndi design by Sumit`} loading="lazy" />
+                <img src={item.image} alt="Mehndi design by Sumit in Bangalore" loading="lazy" />
                 <div className="zoom-badge">
                   <ZoomIn size={18} />
                   <span>Click to view full size</span>
                 </div>
               </div>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
+              {item.title && <h3>{item.title}</h3>}
+              {item.text && <p>{item.text}</p>}
             </article>
           );
         })}
@@ -403,6 +402,7 @@ function Reels() {
     </section>
   );
 }
+
 function Quote() {
   return (
     <section className="quote">
@@ -515,14 +515,14 @@ function BookingForm() {
     event.preventDefault();
 
     if (designChoice === "yes") {
-      const slug =
-        occasion === "Bridal" ? "bridal" :
-          occasion === "Engagement" ? "engagement" :
-            occasion === "Festival" ? "festival" :
-              occasion === "Relatives" || occasion === "Wedding Guest" ? "relatives" :
-                "custom";
+      const path =
+        occasion === "Bridal" ? "/bridal-mehndi-artist-bangalore" :
+          occasion === "Engagement" ? "/engagement-mehndi-artist-bangalore" :
+            occasion === "Festival" ? "/festival-mehndi-artist-bangalore" :
+              occasion === "Relatives" || occasion === "Wedding Guest" ? "/guest-mehndi-artist-bangalore" :
+                "/bridal-mehndi-artist-bangalore";
 
-      navigate(`/designs/${slug}`);
+      navigate(path);
       return;
     }
 
@@ -568,10 +568,19 @@ function Footer() {
         <i>Sumit</i>
         <span>MEHNDI ARTIST · BANGALORE</span>
       </div>
+      <div className="footer-seo-nav">
+        {categories.map((cat) => (
+          <Link key={cat.slug} to={cat.path || categoryPaths[cat.slug]}>
+            {cat.title} Bangalore
+          </Link>
+        ))}
+        <Link to="/mehndi-artist-bangalore">Mehndi Artist in Bangalore</Link>
+        <Link to="/book">Book Appointment</Link>
+      </div>
       <p>© {new Date().getFullYear()} Sumit Mehandi Artist. All rights reserved.</p>
       <div>
-        <a href={siteConfig.instagram} target="_blank" rel="noreferrer"><Instagram size={15} /></a>
-        <a href={getWhatsAppUrl("Hi Sumit, I would like to enquire about mehndi booking.")} target="_blank" rel="noreferrer"><MessageCircle size={15} /></a>
+        <a href={siteConfig.instagram} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={15} /></a>
+        <a href={getWhatsAppUrl("Hi Sumit, I would like to enquire about mehndi booking.")} target="_blank" rel="noreferrer" aria-label="WhatsApp"><MessageCircle size={15} /></a>
       </div>
     </footer>
   );
@@ -589,7 +598,7 @@ function Home() {
       "@type": "City",
       "name": "Bangalore"
     },
-    "priceRange": "₹₹",
+    "priceRange": "₹400 - ₹21,000",
     "image": "https://sumitmehandiartist.in/images/bridal-mehndi-artist-bangalore-1.jpeg"
   };
 
@@ -654,7 +663,6 @@ function ImageLightbox({ items, currentIndex, onClose, onNavigate }) {
 
   const title = item.name || item.title || "Mehndi Design";
   const image = item.image;
-  const price = item.price;
   const description = item.description || item.text;
   const category = item.category;
 
@@ -759,7 +767,6 @@ function DesignCard({ design, onImageClick }) {
         <h3>{design.name}</h3>
         <p>{design.description}</p>
         <div className="design-meta">
-
           <a
             href={getWhatsAppUrl(`Hi Sumit, I would like to book the "${design.name}" mehndi design.`)}
             target="_blank"
@@ -773,11 +780,18 @@ function DesignCard({ design, onImageClick }) {
   );
 }
 
-function DesignsPage() {
+/* -------------------------------------------------------------------------- */
+/* EXISTING DESIGNS PAGE COMPONENT                                            */
+/* Renders the exact existing category designs page for any given category.   */
+/* -------------------------------------------------------------------------- */
+function DesignsPage({ categorySlug }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const { slug } = useParams();
-  const category = getCategory(slug);
-  const list = useMemo(() => getDesignsByCategory(slug), [slug]);
+  const { slug: routeSlug } = useParams();
+  const targetSlug = categorySlug || routeSlug;
+  const category = getCategory(targetSlug);
+  const list = useMemo(() => getDesignsByCategory(targetSlug), [targetSlug]);
+
+  const canonicalPath = categoryPaths[targetSlug] || `/designs/${targetSlug}`;
 
   const serviceSchema = category ? {
     "@context": "https://schema.org",
@@ -813,7 +827,7 @@ function DesignsPage() {
       <Helmet>
         <title>{category.title} | Best Mehendi Artist in Bangalore</title>
         <meta name="description" content={category.description} />
-        <link rel="canonical" href={`https://sumitmehandiartist.in/designs/${slug}`} />
+        <link rel="canonical" href={`https://sumitmehandiartist.in${canonicalPath}`} />
         {serviceSchema && (
           <script type="application/ld+json">
             {JSON.stringify(serviceSchema)}
@@ -872,6 +886,9 @@ function DesignsPage() {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* EXISTING BOOKING PAGE COMPONENT                                           */
+/* -------------------------------------------------------------------------- */
 function BookPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -898,6 +915,7 @@ function BookPage() {
         </p>
         <BookingForm />
       </div>
+      <Footer />
     </div>
   );
 }
@@ -955,6 +973,9 @@ function WhyChooseUs() {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* EXISTING MEHNDI ARTIST BANGALORE PAGE COMPONENT                            */
+/* -------------------------------------------------------------------------- */
 function MehndiArtistBangalorePage() {
   const reveal = useReveal();
 
@@ -1006,7 +1027,7 @@ function MehndiArtistBangalorePage() {
   return (
     <div className="seo-landing-page">
       <Helmet>
-        <title>Mehndi Artist in Bangalore | Sumit Mehandi Artist</title>
+        <title>Best Mehndi Artist in Bangalore | Sumit Mehandi Artist</title>
         <meta
           name="description"
           content="Looking for a professional mehendi artist in Bangalore? Sumit Mehandi Artist provides affordable bridal, wedding, engagement, and festival mehendi designs across Bangalore."
@@ -1022,7 +1043,6 @@ function MehndiArtistBangalorePage() {
 
       <Navbar />
 
-      {/* Hero Section */}
       <section className="seo-hero">
         <motion.div className="seo-hero-content" {...reveal}>
           <p className="eyebrow">BANGALORE · PROFESSIONAL MEHNDI ARTIST</p>
@@ -1041,7 +1061,6 @@ function MehndiArtistBangalorePage() {
         </motion.div>
       </section>
 
-      {/* Bangalore Introduction Section */}
       <section className="section seo-intro">
         <motion.div {...reveal}>
           <p className="eyebrow">ABOUT OUR SERVICES IN BANGALORE</p>
@@ -1062,7 +1081,6 @@ function MehndiArtistBangalorePage() {
         </motion.div>
       </section>
 
-      {/* Services Grid (Bridal, Wedding, Engagement, Festival) */}
       <section className="section seo-services" id="services">
         <motion.div {...reveal}>
           <p className="eyebrow">MEHNDI SERVICES IN BANGALORE</p>
@@ -1074,7 +1092,6 @@ function MehndiArtistBangalorePage() {
         </motion.div>
 
         <div className="seo-services-grid">
-          {/* Bridal Mehndi */}
           <motion.article className="seo-service-card" {...reveal}>
             <div className="seo-card-img">
               <img src="/images/bridal-mehndi-artist-bangalore-1.jpeg" alt="Bridal Mehndi Artist in Bangalore" loading="lazy" />
@@ -1087,20 +1104,16 @@ function MehndiArtistBangalorePage() {
               </p>
               <p className="starting-price">Starting from ₹4,000</p>
               <div className="seo-card-actions">
-                <Link className="button" to="/book">
-                  Book Your Mehndi <ArrowUpRight size={15} />
-                </Link>
-                <Link className="text-link" to="/designs/bridal">
+                <Link className="button" to="/bridal-mehndi-artist-bangalore">
                   Explore Bridal Designs <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
           </motion.article>
 
-          {/* Wedding & Guest Mehndi */}
           <motion.article className="seo-service-card" {...reveal}>
             <div className="seo-card-img">
-              <img src="/images/arabic-mehndi-design-bangalore.jpeg" alt="Wedding Mehndi Artist in Bangalore" loading="lazy" />
+              <img src="/images/arabic-mehndi-design-bangalore.jpeg" alt="Guest Mehndi Artist in Bangalore" loading="lazy" />
             </div>
             <div className="seo-card-content">
               <span className="eyebrow">WEDDING & GUESTS</span>
@@ -1110,17 +1123,13 @@ function MehndiArtistBangalorePage() {
               </p>
               <p className="starting-price">Starting from ₹400</p>
               <div className="seo-card-actions">
-                <Link className="button" to="/book">
-                  Book Your Mehndi <ArrowUpRight size={15} />
-                </Link>
-                <Link className="text-link" to="/designs/relatives">
+                <Link className="button" to="/guest-mehndi-artist-bangalore">
                   Explore Guest Designs <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
           </motion.article>
 
-          {/* Engagement Mehndi */}
           <motion.article className="seo-service-card" {...reveal}>
             <div className="seo-card-img">
               <img src="/images/best-mehndi-artist-bangalore-carousel-1.jpeg" alt="Engagement Mehndi Artist in Bangalore" loading="lazy" />
@@ -1133,17 +1142,13 @@ function MehndiArtistBangalorePage() {
               </p>
               <p className="starting-price">Starting from ₹4,000</p>
               <div className="seo-card-actions">
-                <Link className="button" to="/book">
-                  Book Your Mehndi <ArrowUpRight size={15} />
-                </Link>
-                <Link className="text-link" to="/designs/engagement">
+                <Link className="button" to="/engagement-mehndi-artist-bangalore">
                   Explore Engagement Designs <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
           </motion.article>
 
-          {/* Festival Mehndi */}
           <motion.article className="seo-service-card" {...reveal}>
             <div className="seo-card-img">
               <img src="/images/festival-mehndi-design-bangalore.jpeg" alt="Festival Mehndi Artist in Bangalore" loading="lazy" />
@@ -1156,10 +1161,7 @@ function MehndiArtistBangalorePage() {
               </p>
               <p className="starting-price">Starting from ₹400</p>
               <div className="seo-card-actions">
-                <Link className="button" to="/book">
-                  Book Your Mehndi <ArrowUpRight size={15} />
-                </Link>
-                <Link className="text-link" to="/designs/festival">
+                <Link className="button" to="/festival-mehndi-artist-bangalore">
                   Explore Festival Designs <ArrowRight size={14} />
                 </Link>
               </div>
@@ -1168,19 +1170,11 @@ function MehndiArtistBangalorePage() {
         </div>
       </section>
 
-      {/* Existing Mehndi Gallery */}
       <Gallery />
-
-      {/* Why Choose Us Section */}
       <WhyChooseUs />
-
-      {/* Actual Bangalore Service Areas */}
       <Areas />
-
-      {/* FAQ Section */}
       <FAQ />
 
-      {/* Final CTA Banner */}
       <section className="section seo-cta-banner">
         <motion.div {...reveal}>
           <p className="eyebrow">BOOK YOUR APPOINTMENT</p>
@@ -1218,10 +1212,32 @@ function App() {
     <BrowserRouter>
       <PageTransition>
         <Routes>
+          {/* Main Pages */}
           <Route path="/" element={<Home />} />
-          <Route path="/designs/:slug" element={<DesignsPage />} />
-          <Route path="/book" element={<BookPage />} />
           <Route path="/mehndi-artist-bangalore" element={<MehndiArtistBangalorePage />} />
+          <Route path="/book" element={<BookPage />} />
+
+          {/* Direct SEO-Friendly Category Routes rendering EXISTING DesignsPage */}
+          <Route path="/bridal-mehndi-artist-bangalore" element={<DesignsPage categorySlug="bridal" />} />
+          <Route path="/engagement-mehndi-artist-bangalore" element={<DesignsPage categorySlug="engagement" />} />
+          <Route path="/festival-mehndi-artist-bangalore" element={<DesignsPage categorySlug="festival" />} />
+          <Route path="/guest-mehndi-artist-bangalore" element={<DesignsPage categorySlug="relatives" />} />
+          <Route path="/leg-mehndi-artist-bangalore" element={<DesignsPage categorySlug="Leg" />} />
+          <Route path="/full-hand-leg-mehndi-bangalore" element={<DesignsPage categorySlug="Both" />} />
+
+          {/* Redirections from Old Design URLs to New Canonical SEO URLs */}
+          <Route path="/designs/bridal" element={<Navigate to="/bridal-mehndi-artist-bangalore" replace />} />
+          <Route path="/designs/engagement" element={<Navigate to="/engagement-mehndi-artist-bangalore" replace />} />
+          <Route path="/designs/festival" element={<Navigate to="/festival-mehndi-artist-bangalore" replace />} />
+          <Route path="/designs/relatives" element={<Navigate to="/guest-mehndi-artist-bangalore" replace />} />
+          <Route path="/designs/Leg" element={<Navigate to="/leg-mehndi-artist-bangalore" replace />} />
+          <Route path="/designs/leg" element={<Navigate to="/leg-mehndi-artist-bangalore" replace />} />
+          <Route path="/designs/Both" element={<Navigate to="/full-hand-leg-mehndi-bangalore" replace />} />
+          <Route path="/designs/both" element={<Navigate to="/full-hand-leg-mehndi-bangalore" replace />} />
+
+          {/* Fallback for any other /designs/:slug */}
+          <Route path="/designs/:slug" element={<DesignsPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </PageTransition>
     </BrowserRouter>
